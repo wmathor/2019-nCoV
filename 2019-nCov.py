@@ -1,6 +1,6 @@
 import requests
-import re
 import time
+import re
 from bs4 import BeautifulSoup
 
 def main():
@@ -11,7 +11,7 @@ def main():
         TitleTime = str(text)
         TitleTime = TitleTime.replace("[<p class=\"mapTitle___2QtRg\">", "")
         TitleTime = TitleTime.replace("</p>]", "")
-        return TitleTime 
+        return TitleTime
 
     def getAllCountry(text):
         AllCountry = str(text)
@@ -77,33 +77,30 @@ def main():
             print(t)
 
         print()
-        print("查看最新消息请摁1，结束请摁0")
-        key = input()
         idx = 0
-        if key == "1":
-            print("==================================最新消息==================================")
-            print()
+        print("==================================最新消息==================================")
+        print()
 
-            news_time = soup.find_all("div", class_="tabLeft2___SbuNE")
-            news_title = soup.find_all("p", class_="topicTitle___2ovVO")
+        news_time = soup.find_all("div", class_="tabLeft2___SbuNE")
+        news_title = soup.find_all("p", class_="topicTitle___2ovVO")
 
-            list_news_time = []
-            list_news_title = []
-            for new_time in news_time:
-                idx = idx + 1
-                if idx == 4:
-                    break;
-                list_news_time.append(getNewsTime(str(new_time)))
+        list_news_time = []
+        list_news_title = []
+        for new_time in news_time:
+            idx = idx + 1
+            if idx == 4:
+                break;
+            list_news_time.append(getNewsTime(str(new_time)))
 
-            idx = 0
-            for new_title in news_title:
-                idx = idx + 1
-                if idx == 4:
-                    break;
-                list_news_title.append(getNewsTitle(str(new_title)))
+        idx = 0
+        for new_title in news_title:
+            idx = idx + 1
+            if idx == 4:
+                break;
+            list_news_title.append(getNewsTitle(str(new_title)))
 
-            for i in range(idx - 1):
-                print(list_news_time[i] + list_news_title[i])
+        for i in range(idx - 1):
+            print(list_news_time[i] + list_news_title[i])
         print("\n欢迎提出各种意见，如发现内容不正确请联系QQ739616037")
     except:
         print("连接失败，请联系管理员检查相关问题QQ739616037")
