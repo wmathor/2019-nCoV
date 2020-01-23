@@ -2,7 +2,7 @@
 
 这个仓库存放的是爬取丁香医生[网站](https://3g.dxy.cn/newh5/view/pneumonia)关于肺炎病毒疫情**实时信息**的代码
 
-[中文]() | [English](https://github.com/mathors/2019-nCoV)
+[中文](https://github.com/mathors/2019-nCoV/blob/master/README-cn.md) | [English](https://github.com/mathors/2019-nCoV)
 
 爬取的内容包括全国确诊人数、疑似人数、相关研究进展（传染源、传播途径等）、全国各省感染人数以及最新的3条实时新闻
 
