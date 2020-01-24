@@ -9,7 +9,7 @@ If you don't see your province in an infected province, it may be because no cas
 
 ----
 
-### :art:2019-1-24 V2.0 update
+### :art:2020-1-24 V2.0 update
 
 - Updated crawler location elements
 - Updated province information display, now in tabular form
