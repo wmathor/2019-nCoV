@@ -40,11 +40,11 @@ ningxia = {}
 neimenggu = {}
 qinghai = {} # none
 xizang = {} # none
-provinces_idx = [hubei, guangdong, zhejiang, beijing, shanghai, hunan, anhui,
-                 chongqing, sichuan, shandong, guangxi, fujian, jiangsu, henan,
-                 hainan, tianjin, jiangxi, shanxi1, guizhou, liaoning, xianggang,
-                 heilongjiang, aomen, xinjiang, gansu, yunnan, taiwan, shanxi2,
-                 jilin, hebei, ningxia, neimenggu, qinghai, xizang]
+provinces_idx = [hubei, guangdong, zhejiang, chongqing, hunan, anhui, beijing,
+                 shanghai, henan, guangxi, shandong, jiangxi, jiangsu, sichuan,
+                 liaoning, fujian, heilongjiang, hainan, tianjin, hebei, shanxi2,
+                 yunnan, xianggang, shanxi1, guizhou, jilin, gansu, taiwan,
+                 xinjiang, ningxia, aomen, neimenggu, qinghai, xizang]
 map = {
     '湖北':0, '广东':1, '浙江':2, '北京':3, '上海':4, '湖南':5, '安徽':6, '重庆':7,
     '四川':8, '山东':9, '广西':10, '福建':11, '江苏':12, '河南':13, '海南':14,
@@ -92,20 +92,6 @@ def query(province):
     else:
         print("暂无")
 
-def getNewsTime(text):
-    text = re.sub("<div class=\"tabLeft2___SbuNE\"><span class=\"leftTime___2zf53\">", "", text)
-    text = re.sub("<br/>", " ", text)
-    text = text.replace("<span style=\"font-size: 10px; color: rgb(153, 153, 153);\">", "")
-    text = text.replace("</span></span><span class=\"leftDot___2cvKP\"></span><span class=\"leftLine___31ohl\"></span></div>", "")
-    return text + " "
-
-def getNewsTitle(text):
-    text = re.sub("<p class=\"topicTitle___2ovVO\">", "", text)
-    text = re.sub("<i>", "", text)
-    text = re.sub("</i>", " ", text)
-    text = text.replace("</p>", "")
-    return text + " "
-
 def getConfirmedNumer(text):
     text = str(text)
     confirmedNumber = re.findall('<p class=\"subBlock2___E7-fW\">(.*?)</p>', text)
@@ -136,6 +122,15 @@ def getInfo(text):
     text = str(text)
     text = re.findall('/i>(.*?)</p>', text)
     return text[0]
+
+def initMap(soup):
+    provinces_info = soup.findAll("div", class_="areaBlock1___3V3UU")
+    idx = 0
+    provinces_info = str(provinces_info)
+    province = re.findall("uQmCC\"/>(.*?)</p><p", provinces_info)
+    for i in range(len(province)):
+        map[province[i]] = i
+        
 
 def main():
     url = "https://3g.dxy.cn/newh5/view/pneumonia"
@@ -211,7 +206,7 @@ def main():
     idx = 0
     for news in json_str['data']['timeline']:
         if idx == 5:
-            break;
+            break
         print(news['pubDateStr'] + "  " + news['title'])
         idx = idx + 1
     
@@ -226,7 +221,9 @@ def main():
             for i in range(len(name)):
                 provinces_idx[idx][name[i]] = [confirmed[i], dead[i], cure[i]]
         idx = idx + 1
-    
+
+    initMap(soup)
+
     hubei = soup.findAll("div", "expand___wz_07")
     name, confirmed, dead, cure = clear(hubei)
     for i in range(len(name)):
