@@ -238,9 +238,9 @@ def main():
     else:
         print("暂无相关信息")
         
-    print("\n欢迎提出各种意见，如发现内容不正确请联系QQ739616037")
+    print("\n欢迎提出各种意见")
 #     except:
-#         print("连接失败，请联系管理员检查相关问题QQ739616037")
+#         print("连接失败")
 
 if __name__ == '__main__':
     main()
