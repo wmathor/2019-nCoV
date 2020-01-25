@@ -1,37 +1,35 @@
 # 2019-nCoV
-
-这个仓库存放的是爬取丁香医生[网站](https://3g.dxy.cn/newh5/view/pneumonia)关于肺炎病毒疫情**实时信息**的代码
+This repo holds the code for crawling the **latest news** on the pneumonia virus from Clove doctor's [website](https://3g.dxy.cn/newh5/view/pneumonia)
 
 [中文](https://github.com/mathors/2019-nCoV/blob/master/README-cn.md) | [English](https://github.com/mathors/2019-nCoV)
 
-爬取的内容包括全国确诊人数、疑似人数、相关研究进展（传染源、传播途径等）、全国各省感染人数以及最新的3条实时新闻
+The content of the crawling includes the number of confirmed cases, the number of suspected cases, the progress of relevant research (source of infection, route of transmission, etc.), the number of infected cases in various provinces and the latest 3 real-time news
 
-如果在各省情况中没有看到您所在的省，说明还没有发现病例，但并不代表可以放松警惕，还请多多注意
-
----
-### :art:2020-1-25 V2.1版本更新
-
-- 更新了爬虫的定位元素
-- 移除了关于我的个人信息
-
-
-### 2020-1-24 V2.0版本更新
-
-- 更新了爬虫的定位元素
-- 更新了省份信息显示，现在是以表格的形式展示
-- 支持查询某个省内的相关信息
-- 使用了丁香医生数据接口
+If you don't see your province in an infected province, it may be because no cases have been found, but that doesn't mean you can let your guard down
 
 ----
 
-### :rocket:关于
+### :art:2020-1-25 V2.1 update
+- Updated crawler location elements
+- Removed the imformation about me
 
-这个项目是由我一人花了晚上2小时熬夜写出来的，目的仅仅只是希望能呼吁大家发挥所长，运用自己所学的知识，为疫情的防控做一些力所能及的事（量力而行）。你可以说我的项目很水，但是请不要说我蹭热度，没有一个中国人会拿这种事情蹭热度
+### 2020-1-24 V2.0 update
+
+- Updated crawler location elements
+- Updated province information display, now in tabular form
+- Support to search for relevant information in a province
+- The lilac doctor data interface was used
+
+----
+
+### :rocket:ABOUT
+
+This project was written by me after staying up late for 2 hours in the evening. I just hope to call on all of you to give full play to your strengths, use what you have learned and do something within your capacity for the prevention and control of the epidemic. You can say that my project is rubbish, but please don't say that I am trying to make a show. No Chinese would make a show of this kind of thing
 
 ### :tada:TODO
 
-我的力量是有限的，您可以帮忙优化代码使其变得更简洁，也可以做一些更高大上的项目，比方说疫情传播的数据可视化之类的。我也会持续想一些点子来完善这个项目，欢迎多多提出问题。谢谢
+My power is limited, you can help optimize the code to make it simpler, or you can do some awesome projects, such as data visualization of epidemic transmission. I will also continue to improve the project, welcome to ask more questions. Thanks
 
-很快我会将我所爬取的数据以json的形式部署到服务器，方便大家调用
+I'll soon deploy the data I've crawled to the server as json, so you can call it
 
 ![](https://s2.ax1x.com/2020/01/25/1eVxqx.gif)
