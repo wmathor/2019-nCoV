@@ -65,6 +65,11 @@ def getAllCountry(text):
     AllCountry = AllCountry.replace("<span style=\"color: #4169e2\">", "")
     AllCountry = re.sub("</span>", "", AllCountry)
     AllCountry = AllCountry.replace("</p>]", "")
+    
+    AllCountry = AllCountry.replace("<span style=\"color: rgb(65, 105, 226);\">", "")
+    AllCountry = re.sub("<span>", "", AllCountry)
+    AllCountry = re.sub("<div>", "", AllCountry)
+    AllCountry = re.sub("</div>", "", AllCountry)
     return AllCountry 
 
 def query(province):
@@ -80,8 +85,9 @@ def query(province):
 
 def getInfo(text):
     text = str(text)
-    text = re.findall('/i>(.*?)</p>', text)
-    return text[0]
+    text = re.sub("<div class=\"descText___Ui3tV\">", "", text)
+    text = re.sub("</div>", "", text)
+    return text
 
 def is_json(json_str):
     try:
@@ -89,6 +95,9 @@ def is_json(json_str):
     except ValueError:
         return False
     return True
+
+def ff(str, num):
+    return str[:num] + str[num+1:]
         
 
 def main():
@@ -112,24 +121,23 @@ def main():
         TitleTime = getTime(soup.select('.mapTitle___2QtRg'))
         
         print()
-        print("                     ",TitleTime + "\n")
+        print("              ",TitleTime + "\n")
         print("==================================全国数据==================================")
         AllCountry = getAllCountry(soup.select('.confirmedNumber___3WrF5'))
-        print("\n" + AllCountry + "\n")
+        print("\n       " + AllCountry + "\n")
 
         print("==================================相关情况==================================")
         print()
-        infos = soup.findAll("p", class_='descList___3iOuI')
+        infos = soup.findAll("div", class_='descText___Ui3tV')
         for info in infos:
             info = getInfo(info)
             print(info)
             
         print()
-        print("==================================各省情况==================================")
+        print("==================================国内情况==================================")
         print()
         
         json_provinces = re.findall("{\"provinceName\":(.*?)]}", str(soup))
-
 
         idx = 0
         for province in json_provinces:
@@ -153,6 +161,25 @@ def main():
 
         print(table)
         
+        
+        print()
+        print("==================================国外情况==================================")
+        print()
+
+        json_provinces = str(re.findall("\"id\":949(.*?)]}", str(soup)))
+        json_provinces = json_provinces[:1] + "{\"id\":949" + json_provinces[2:]
+        json_provinces = json_provinces[:len(json_provinces) - 2] + json_provinces[len(json_provinces) - 1:]
+        provinces = json.loads(json_provinces)
+
+        table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
+        for province in provinces:
+            confirmed = province['confirmedCount'] if province['confirmedCount'] != 0 else '-'
+            dead = province['deadCount'] if province['deadCount'] != 0 else '-'
+            cured = province['curedCount'] if province['curedCount'] != 0 else '-'
+            table.add_row([province['provinceName'], confirmed, dead, cured])
+        
+        print(table)
+        print()
         
         print("==================================最新消息==================================")
         print()
