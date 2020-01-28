@@ -7,7 +7,7 @@ The content of the crawling includes the number of confirmed cases, the number o
 
 If you don't see your province in an infected province, it may be because no cases have been found, but that doesn't mean you can let your guard down
 
-It may be faster for domestic users to download EXE files through this [link](https://www.qsc.zju.edu.cn/box/-25022740 )
+It may be faster for domestic users to [download](https://www.qsc.zju.edu.cn/box/-25022740) EXE files through this link
 
 ----
 ### :art:2020-1-28 V2.2 update
