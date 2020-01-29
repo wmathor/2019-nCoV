@@ -1,7 +1,7 @@
 # 2019-nCoV
 <p align = "center">
   <a href = "https://github.com/mathors/2019-nCoV">
-    <img src="https://img.shields.io/badge/language-Python-brightgreen.svg">
+    <img src="https://img.shields.io/badge/Language-Python-brightgreen.svg">
   </a>
   <a href = "https://github.com/mathors/2019-nCoVe">
     <img src = "https://img.shields.io/badge/Compiler-VsCode-blue.svg">
