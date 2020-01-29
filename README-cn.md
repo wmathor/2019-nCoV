@@ -1,4 +1,15 @@
 # 2019-nCoV
+<p align = "center">
+  <a href = "https://github.com/mathors/2019-nCoV">
+    <img src="https://img.shields.io/badge/language-Python-brightgreen.svg">
+  </a>
+  <a href = "https://github.com/mathors/2019-nCoVe">
+    <img src = "https://img.shields.io/badge/Compiler-VsCode-blue.svg">
+  </a>
+  <a href = "https://wmathor.com/" target = "_blank">
+    <img src = "https://img.shields.io/badge/Blog-wmathor-orange.svg">
+  </a>
+</p>
 
 这个仓库存放的是爬取丁香医生[网站](https://3g.dxy.cn/newh5/view/pneumonia)关于肺炎病毒疫情**实时信息**的代码
 
