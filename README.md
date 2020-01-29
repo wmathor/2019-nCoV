@@ -1,4 +1,16 @@
 # 2019-nCoV
+<p align = "center">
+  <a href = "https://github.com/mathors/2019-nCoV">
+    <img src="https://img.shields.io/badge/language-Python-brightgreen.svg">
+  </a>
+  <a href = "https://github.com/mathors/2019-nCoVe">
+    <img src = "https://img.shields.io/badge/Compiler-VsCode-blue.svg">
+  </a>
+  <a href = "https://wmathor.com/" target = "_blank">
+    <img src = "https://img.shields.io/badge/Blog-wmathor-orange.svg">
+  </a>
+</p>
+
 This repo holds the code for crawling the **latest news** on the pneumonia virus from Clove doctor's [website](https://3g.dxy.cn/newh5/view/pneumonia)
 
 [中文](https://github.com/mathors/2019-nCoV/blob/master/README-cn.md) | [English](https://github.com/mathors/2019-nCoV)
