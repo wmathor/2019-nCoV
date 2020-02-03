@@ -54,24 +54,6 @@ map = {
 }
 
 
-def getTime(text):
-    TitleTime = str(text)
-    TitleTime = re.findall('<span>(.*?)</span>', TitleTime)
-    return TitleTime[0]
-
-def getAllCountry(text):
-    AllCountry = str(text)
-    AllCountry = AllCountry.replace("[<p class=\"confirmedNumber___3WrF5\"><span class=\"content___2hIPS\">", "")
-    AllCountry = AllCountry.replace("<span style=\"color: #4169e2\">", "")
-    AllCountry = re.sub("</span>", "", AllCountry)
-    AllCountry = AllCountry.replace("</p>]", "")
-    
-    AllCountry = AllCountry.replace("<span style=\"color: rgb(65, 105, 226);\">", "")
-    AllCountry = re.sub("<span>", "", AllCountry)
-    AllCountry = re.sub("<div>", "", AllCountry)
-    AllCountry = re.sub("</div>", "", AllCountry)
-    return AllCountry 
-
 def query(province):
     table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
 
@@ -83,12 +65,6 @@ def query(province):
     else:
         print("暂无")
 
-def getInfo(text):
-    text = str(text)
-    text = re.sub("<div class=\"descText___Ui3tV\">", "", text)
-    text = re.sub("</div>", "", text)
-    return text
-
 def is_json(json_str):
     try:
         json.loads(json_str)
@@ -96,8 +72,6 @@ def is_json(json_str):
         return False
     return True
 
-def ff(str, num):
-    return str[:num] + str[num+1:]
         
 
 def main():
@@ -116,12 +90,6 @@ def main():
         soup = BeautifulSoup(r.text,'lxml')
         table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
         table.hrules = ALL
-
-        #### 截至时间
-        # TitleTime = getTime(soup.select('.title___2d1_B'))
-        
-        print()
-        # print("              ",TitleTime + "\n")
 
         while True:
             r = requests.get("https://service-f9fjwngp-1252021671.bj.apigw.tencentcs.com/release/pneumonia")
@@ -160,9 +128,11 @@ def main():
                 province = "{\"provinceName\":" + province + "]}"
                 province = json.loads(province)
                 
-            province_name = province['provinceShortName'] if province['provinceShortName'] != 0 else '-'
+            province_name = province['provinceShortName']
+            if province_name == '待明确地区':
+                    break
             confirmed = province['confirmedCount'] if province['confirmedCount'] != 0 else '-'
-            suspected = province['suspectedCount'] if province['suspectedCount'] != 0 else '-'
+            # suspected = province['suspectedCount'] if province['suspectedCount'] != 0 else '-'
             cured = province['curedCount'] if province['curedCount'] != 0 else '-'
             dead = province['deadCount'] if province['deadCount'] != 0 else '-'
             table.add_row([province_name, confirmed, dead, cured])
