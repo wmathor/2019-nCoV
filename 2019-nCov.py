@@ -102,15 +102,16 @@ def main():
         
         print("     确诊 " + str(json_str['data']['statistics']['confirmedCount']) + " 例"
             + "       " + "疑似 " + str(json_str['data']['statistics']['suspectedCount']) + " 例"
-            + "       " + "死亡" + str(json_str['data']['statistics']['deadCount']) + " 例"
-            + "       " + "治愈" + str(json_str['data']['statistics']['curedCount']) + " 例\n")
+            + "       " + "死亡 " + str(json_str['data']['statistics']['deadCount']) + " 例"
+            + "       " + "治愈 " + str(json_str['data']['statistics']['curedCount']) + " 例\n")
 
         print("==================================相关情况==================================")
         print()
 
-        print("传染源：" + json_str['data']['statistics']['infectSource'])
-        print("病毒：" + json_str['data']['statistics']['virus'])
-        print("传播途径：" + json_str['data']['statistics']['passWay'])
+        print(json_str['data']['statistics']['note1'])
+        print(json_str['data']['statistics']['remark3'])
+        print(json_str['data']['statistics']['note2'])
+        print(json_str['data']['statistics']['note3'])
         print(json_str['data']['statistics']['remark1'])
         print(json_str['data']['statistics']['remark2'] + "\n")
             
