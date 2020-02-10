@@ -149,8 +149,8 @@ def main():
         print("==================================国外情况==================================")
         print()
 
-        json_provinces = str(re.findall("\"id\":949(.*?)]}", str(soup)))
-        json_provinces = json_provinces[:1] + "{\"id\":949" + json_provinces[2:]
+        json_provinces = str(re.findall("\"id\":38(.*?)]}", str(soup)))
+        json_provinces = json_provinces[:1] + "{\"id\":38" + json_provinces[2:]
         json_provinces = json_provinces[:len(json_provinces) - 2] + json_provinces[len(json_provinces) - 1:]
         provinces = json.loads(json_provinces)
 
