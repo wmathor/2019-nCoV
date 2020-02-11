@@ -97,6 +97,7 @@ def main():
             if json_str['error'] == 0:
                 break
 
+        print()
         print("==================================全国数据==================================")
         print()
         
@@ -149,17 +150,9 @@ def main():
         print("==================================国外情况==================================")
         print()
 
-        json_provinces = str(re.findall("\"id\":38(.*?)]}", str(soup)))
-        json_provinces = json_provinces[:1] + "{\"id\":38" + json_provinces[2:]
-        json_provinces = json_provinces[:len(json_provinces) - 2] + json_provinces[len(json_provinces) - 1:]
-        provinces = json.loads(json_provinces)
-
         table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
-        for province in provinces:
-            confirmed = province['confirmedCount'] if province['confirmedCount'] != 0 else '-'
-            dead = province['deadCount'] if province['deadCount'] != 0 else '-'
-            cured = province['curedCount'] if province['curedCount'] != 0 else '-'
-            table.add_row([province['provinceName'], confirmed, dead, cured])
+        for other in json_str['data']['listByOther']:
+            table.add_row([other['name'], other['confirmed'], other['dead'], other['cured']])
         
         print(table)
         print()
