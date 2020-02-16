@@ -76,101 +76,101 @@ def is_json(json_str):
 
 def main():
     url = "https://tianqiapi.com/api?version=epidemic&appid=98687232&appsecret=1GGIGivo"
-    # try:
-    headers = {}
-    headers['user-agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36' #http头大小写不敏感
-    headers['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-    headers['Connection'] = 'keep-alive'
-    headers['Upgrade-Insecure-Requests'] = '1'
+    try:
+        headers = {}
+        headers['user-agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36' #http头大小写不敏感
+        headers['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+        headers['Connection'] = 'keep-alive'
+        headers['Upgrade-Insecure-Requests'] = '1'
 
-    r = requests.get(url, headers=headers)
-    r.raise_for_status()
-    r.encoding = r.apparent_encoding
-    soup = BeautifulSoup(r.text,'lxml')
-    table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
-    table.hrules = ALL
+        r = requests.get(url, headers=headers)
+        r.raise_for_status()
+        r.encoding = r.apparent_encoding
+        soup = BeautifulSoup(r.text,'lxml')
+        table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
+        table.hrules = ALL
 
-    while True:
-        r = requests.get(url)
-        json_str = json.loads(r.text)
-        if json_str['errcode'] == 0:
-            break
+        while True:
+            r = requests.get(url)
+            json_str = json.loads(r.text)
+            if json_str['errcode'] == 0:
+                break
 
-    print()
-    print("==================================全国数据==================================")
-    print()
-    
-    print("   确诊 " + str(json_str['data']['diagnosed']) + " 例"
-        + "       " + "疑似 " + str(json_str['data']['suspect']) + " 例"
-        + "       " + "死亡 " + str(json_str['data']['death']) + " 例"
-        + "       " + "治愈 " + str(json_str['data']['cured']) + " 例\n")
-
-    # print("==================================相关情况==================================")
-    # print()
-
-    # print(json_str['data']['statistics']['note1'])
-    # print(json_str['data']['statistics']['remark3'])
-    # print(json_str['data']['statistics']['note2'])
-    # print(json_str['data']['statistics']['note3'])
-    # print(json_str['data']['statistics']['remark1'])
-    # print(json_str['data']['statistics']['remark2'] + "\n")
+        print()
+        print("==================================全国数据==================================")
+        print()
         
-    print("==================================国内情况==================================")
-    print()
-    
-    # json_provinces = re.findall("{\"provinceName\":(.*?)]}", str(soup))
-    json_provinces = json_str['data']['area']
-    idx = 0
-    for province in json_provinces:
-        province_name = province['provinceShortName']
-        confirmed = province['confirmedCount'] if province['confirmedCount'] != 0 else '-'
-        # suspected = province['suspectedCount'] if province['suspectedCount'] != 0 else '-'
-        cured = province['curedCount'] if province['curedCount'] != 0 else '-'
-        dead = province['deadCount'] if province['deadCount'] != 0 else '-'
-        table.add_row([province_name, confirmed, dead, cured])
-        map[province_name] = idx
-        idx = idx + 1
-        for city in province['cities']:
-            provinces_idx[map[province_name]][city['cityName']] = [city['confirmedCount'], city['deadCount'], city['curedCount']]
+        print("   确诊 " + str(json_str['data']['diagnosed']) + " 例"
+            + "       " + "疑似 " + str(json_str['data']['suspect']) + " 例"
+            + "       " + "死亡 " + str(json_str['data']['death']) + " 例"
+            + "       " + "治愈 " + str(json_str['data']['cured']) + " 例\n")
 
-    print(table)
-    
-    
-    print()
-    # print("==================================国外情况==================================")
-    # print()
+        # print("==================================相关情况==================================")
+        # print()
 
-    # table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
-    # for other in json_str['data']['listByOther']:
-    #     table.add_row([other['name'], other['confirmed'], other['dead'], other['cured']])
-    
-    # print(table)
-    # print()
-    
-    # print("==================================最新消息==================================")
-    # print()
-    
+        # print(json_str['data']['statistics']['note1'])
+        # print(json_str['data']['statistics']['remark3'])
+        # print(json_str['data']['statistics']['note2'])
+        # print(json_str['data']['statistics']['note3'])
+        # print(json_str['data']['statistics']['remark1'])
+        # print(json_str['data']['statistics']['remark2'] + "\n")
+            
+        print("==================================国内情况==================================")
+        print()
         
-    # idx = 0
-    # for news in json_str['data']['timeline']:
-    #     if idx == 5:
-    #         break
-    #     print(news['pubDateStr'] + "  " + news['title'])
-    #     idx = idx + 1
-    
+        # json_provinces = re.findall("{\"provinceName\":(.*?)]}", str(soup))
+        json_provinces = json_str['data']['area']
+        idx = 0
+        for province in json_provinces:
+            province_name = province['provinceShortName']
+            confirmed = province['confirmedCount'] if province['confirmedCount'] != 0 else '-'
+            # suspected = province['suspectedCount'] if province['suspectedCount'] != 0 else '-'
+            cured = province['curedCount'] if province['curedCount'] != 0 else '-'
+            dead = province['deadCount'] if province['deadCount'] != 0 else '-'
+            table.add_row([province_name, confirmed, dead, cured])
+            map[province_name] = idx
+            idx = idx + 1
+            for city in province['cities']:
+                provinces_idx[map[province_name]][city['cityName']] = [city['confirmedCount'], city['deadCount'], city['curedCount']]
 
-    print()
-    key = input("请输入您想查询详细信息的省份，例如 湖北\n")
-    print()
-    if key in map.keys():
-        query(provinces_idx[map[key]])
-    else:
-        print("暂无相关信息")
+        print(table)
         
-    print("\n欢迎提出各种意见")
-    # except:
-    #     print("连接失败")
+        
+        print()
+        # print("==================================国外情况==================================")
+        # print()
+
+        # table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
+        # for other in json_str['data']['listByOther']:
+        #     table.add_row([other['name'], other['confirmed'], other['dead'], other['cured']])
+        
+        # print(table)
+        # print()
+        
+        # print("==================================最新消息==================================")
+        # print()
+        
+            
+        # idx = 0
+        # for news in json_str['data']['timeline']:
+        #     if idx == 5:
+        #         break
+        #     print(news['pubDateStr'] + "  " + news['title'])
+        #     idx = idx + 1
+        
+
+        print()
+        key = input("请输入您想查询详细信息的省份，例如 湖北\n")
+        print()
+        if key in map.keys():
+            query(provinces_idx[map[key]])
+        else:
+            print("暂无相关信息")
+            
+        print("\n欢迎提出各种意见")
+    except:
+        print("连接失败")
 
 if __name__ == '__main__':
     main()
-    # sleep(30)
+    sleep(30)
