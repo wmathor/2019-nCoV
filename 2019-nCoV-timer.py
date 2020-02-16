@@ -57,7 +57,7 @@ map = {
 }
 
 def getData():
-    url = "https://service-f9fjwngp-1252021671.bj.apigw.tencentcs.com/release/pneumonia"
+    url = "https://tianqiapi.com/api?version=epidemic&appid=98687232&appsecret=1GGIGivo"
     headers = {}
     headers['user-agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36' #http头大小写不敏感
     headers['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
@@ -68,30 +68,29 @@ def getData():
         r = requests.get(url, headers=headers)
         r.encoding = r.apparent_encoding
         json_str = json.loads(r.text)
-        if json_str['error'] == 0:
+        if json_str['errcode'] == 0:
             break
-    
     idx = 0
-    for data in json_str['data']['listByArea']:
-        if data['provinceShortName'] == '待明确地区':
+    for data in json_str['data']['area']:
+        if data['provinceShortName'] == '待确认地区':
             break
         map[data['provinceShortName']] = idx
         provinces_idx[idx]['name'] = data['provinceShortName']
-        provinces_idx[idx]['confirmed'] = data['confirmed']
-        provinces_idx[idx]['dead'] = data['dead']
-        provinces_idx[idx]['cured'] = data['cured']
-        provinces_idx[idx]['suspected'] = data['suspected']
+        provinces_idx[idx]['confirmed'] = data['confirmedCount']
+        provinces_idx[idx]['dead'] = data['deadCount']
+        provinces_idx[idx]['cured'] = data['curedCount']
+        provinces_idx[idx]['suspected'] = data['suspectedCount']
         provinces_idx[idx]['cities'] = []
         
         for city in data['cities']:
-            if city['cityName'] == '待明确地区':
+            if city['cityName'] == '待确认地区':
                 break
             tmp = {}
             tmp['name'] = city['cityName']
-            tmp['confirmed'] = city['confirmed']
-            tmp['dead'] = city['dead']
-            tmp['cured'] = city['cured']
-            tmp['suspected'] = city['suspected']
+            tmp['confirmed'] = city['confirmedCount']
+            tmp['dead'] = city['deadCount']
+            tmp['cured'] = city['curedCount']
+            tmp['suspected'] = city['suspectedCount']
             provinces_idx[idx]['cities'].append(tmp)
         idx = idx + 1
 
