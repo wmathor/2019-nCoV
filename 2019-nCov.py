@@ -86,7 +86,6 @@ def main():
         r = requests.get(url, headers=headers)
         r.raise_for_status()
         r.encoding = r.apparent_encoding
-        soup = BeautifulSoup(r.text,'lxml')
         table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
         table.hrules = ALL
 
@@ -105,26 +104,30 @@ def main():
             + "       " + "死亡 " + str(json_str['data']['death']) + " 例"
             + "       " + "治愈 " + str(json_str['data']['cured']) + " 例\n")
 
-        # print("==================================相关情况==================================")
-        # print()
+        url_info = "https://lab.isaaclin.cn/nCoV/api/overall"
+        while True:
+            json_info = json.loads(requests.get(url_info, headers=headers).text)
+            if json_info['success']:
+                break
 
-        # print(json_str['data']['statistics']['note1'])
-        # print(json_str['data']['statistics']['remark3'])
-        # print(json_str['data']['statistics']['note2'])
-        # print(json_str['data']['statistics']['note3'])
-        # print(json_str['data']['statistics']['remark1'])
-        # print(json_str['data']['statistics']['remark2'] + "\n")
+        print("==================================相关情况==================================")
+        print()
+        
+        print(json_info['results'][0]['note1'])
+        print(json_info['results'][0]['remark3'])
+        print(json_info['results'][0]['note2'])
+        print(json_info['results'][0]['remark1'])
+        print(json_info['results'][0]['note3'])
+        print(json_info['results'][0]['remark2'] + "\n")
             
         print("==================================国内情况==================================")
         print()
         
-        # json_provinces = re.findall("{\"provinceName\":(.*?)]}", str(soup))
         json_provinces = json_str['data']['area']
         idx = 0
         for province in json_provinces:
             province_name = province['provinceShortName']
             confirmed = province['confirmedCount'] if province['confirmedCount'] != 0 else '-'
-            # suspected = province['suspectedCount'] if province['suspectedCount'] != 0 else '-'
             cured = province['curedCount'] if province['curedCount'] != 0 else '-'
             dead = province['deadCount'] if province['deadCount'] != 0 else '-'
             table.add_row([province_name, confirmed, dead, cured])
@@ -147,16 +150,18 @@ def main():
         # print(table)
         # print()
         
-        # print("==================================最新消息==================================")
-        # print()
+        url_info = "https://lab.isaaclin.cn/nCoV/api/news"
+        while True:
+            if is_json(requests.get(url_info).text):
+                json_info = json.loads(requests.get(url_info).text)
+                if json_info['success']:
+                    break
+
+        print("==================================最新消息==================================")
+        print()
         
-            
-        # idx = 0
-        # for news in json_str['data']['timeline']:
-        #     if idx == 5:
-        #         break
-        #     print(news['pubDateStr'] + "  " + news['title'])
-        #     idx = idx + 1
+        for i in range(5):
+            print(json_info["results"][i]['title'])
         
 
         print()
@@ -169,7 +174,7 @@ def main():
             
         print("\n欢迎提出各种意见")
     except:
-        print("连接失败")
+        print("连接失败，请在Github中提出Issue，或者联系QQ16036505")
 
 if __name__ == '__main__':
     main()
