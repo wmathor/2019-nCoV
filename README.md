@@ -11,7 +11,7 @@
   </a>
 </p>
 
-This repo holds the code for crawling the **latest news** on the pneumonia virus from Clove doctor's [website](https://3g.dxy.cn/newh5/view/pneumonia)
+This repo holds the code for crawling the **latest news** on the pneumonia virus from the Internet
 
 [中文](https://github.com/wmathor/2019-nCoV/blob/master/README-cn.md) | [English](https://github.com/wmathor/2019-nCoV)
 

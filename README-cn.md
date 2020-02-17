@@ -11,7 +11,7 @@
   </a>
 </p>
 
-这个仓库存放的是爬取丁香医生[网站](https://3g.dxy.cn/newh5/view/pneumonia)关于肺炎病毒疫情**实时信息**的代码
+这个仓库存放的是爬取互联网上关于肺炎病毒疫情**实时信息**的代码
 
 [中文](https://github.com/mathors/2019-nCoV/blob/master/README-cn.md) | [English](https://github.com/mathors/2019-nCoV)
 
