@@ -8,106 +8,57 @@ from time import sleep
 from openpyxl import load_workbook, Workbook
 warnings.filterwarnings('ignore')
 
-
-hubei = {}
-guangdong = {}
-zhejiang = {}
-beijing = {}
-shanghai = {}
-hunan = {}
-anhui = {}
-chongqing = {}
-sichuan = {}
-shandong = {}
-guangxi = {}
-fujian = {}
-jiangsu = {}
-henan = {}
-hainan = {}
-tianjin = {}
-jiangxi = {}
-shanxi1 = {} # 陕西
-guizhou = {}
-liaoning = {}
-xianggang = {}
-heilongjiang = {}
-aomen = {}
-xinjiang = {}
-gansu = {}
-yunnan = {}
-taiwan = {}
-shanxi2 = {} # 山西
-jilin = {}
-hebei = {}
-ningxia = {}
-neimenggu = {}
-qinghai = {} # none
-xizang = {} # none
-provinces_idx = [hubei, guangdong, zhejiang, chongqing, hunan, anhui, beijing,
-                 shanghai, henan, guangxi, shandong, jiangxi, jiangsu, sichuan,
-                 liaoning, fujian, heilongjiang, hainan, tianjin, hebei, shanxi2,
-                 yunnan, xianggang, shanxi1, guizhou, jilin, gansu, taiwan,
-                 xinjiang, ningxia, aomen, neimenggu, qinghai, xizang]
-map = {
-    '湖北':0, '广东':1, '浙江':2, '北京':3, '上海':4, '湖南':5, '安徽':6, '重庆':7,
-    '四川':8, '山东':9, '广西':10, '福建':11, '江苏':12, '河南':13, '海南':14,
-    '天津':15, '江西':16, '陕西':17, '贵州':18, '辽宁':19, '香港':20, '黑龙江':21,
-    '澳门':22, '新疆':23, '甘肃':24, '云南':25, '台湾':26, '山西':27, '吉林':28,
-    '河北':29, '宁夏':30, '内蒙古':31, '青海':32, '西藏':33
-}
+                     #  省份           城市,  确诊, 死亡,  治愈, 疑似
+# China = [{"province":"河南", cities:[[信阳", 10,   0,    10,   10], [], []]}, {}, {}, {}]
+China = []
 
 def getData():
-    url = "https://tianqiapi.com/api?version=epidemic&appid=98687232&appsecret=1GGIGivo"
+    url = "https://lab.isaaclin.cn/nCoV/api/area"
     headers = {}
     headers['user-agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36' #http头大小写不敏感
     headers['accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
     headers['Connection'] = 'keep-alive'
     headers['Upgrade-Insecure-Requests'] = '1'
-
+    
     while True:
         r = requests.get(url, headers=headers)
         r.encoding = r.apparent_encoding
         json_str = json.loads(r.text)
-        if json_str['errcode'] == 0:
+        if json_str['success']:
             break
-    idx = 0
-    for data in json_str['data']['area']:
-        if data['provinceShortName'] == '待确认地区':
-            break
-        map[data['provinceShortName']] = idx
-        provinces_idx[idx]['name'] = data['provinceShortName']
-        provinces_idx[idx]['confirmed'] = data['confirmedCount']
-        provinces_idx[idx]['dead'] = data['deadCount']
-        provinces_idx[idx]['cured'] = data['curedCount']
-        provinces_idx[idx]['suspected'] = data['suspectedCount']
-        provinces_idx[idx]['cities'] = []
-        
-        for city in data['cities']:
-            if city['cityName'] == '待确认地区':
-                break
-            tmp = {}
-            tmp['name'] = city['cityName']
-            tmp['confirmed'] = city['confirmedCount']
-            tmp['dead'] = city['deadCount']
-            tmp['cured'] = city['curedCount']
-            tmp['suspected'] = city['suspectedCount']
-            provinces_idx[idx]['cities'].append(tmp)
-        idx = idx + 1
+    
+    for data in json_str['results']:
+        if data['countryName'] == '中国': 
+            province_dict = {}
+            province_dict["province"] = data['provinceShortName']
+            province_dict["cities"] = []
+            if len(data['cities']) == 0:
+                province_dict['cities'].append(get_city_data('', data["confirmedCount"], data['deadCount'], data['curedCount'], data['suspectedCount']))            
+            else:
+                for city in data['cities']:        
+                    if city['cityName'] != '待明确地区':
+                        province_dict['cities'].append(get_city_data(city["cityName"], city["confirmedCount"], city['deadCount'], city['curedCount'], city['suspectedCount']))
+            
+            China.append(province_dict)
+
+def get_city_data(name, confirmedCount, deadCount, curedCount, suspectedCount):
+    tmp = []
+    tmp.append(name)
+    tmp.append(confirmedCount)
+    tmp.append(deadCount)
+    tmp.append(curedCount)
+    tmp.append(suspectedCount)
+    return tmp
+
 
 def data_to_excel(my_sheet, cur_day):
     row = ['省份', '城市', '日期', '确诊', '死亡', '治愈', '疑似']
     my_sheet.append(row)
-
-    for i in range(34):
-        province = provinces_idx[i]['name']
-        if len(provinces_idx[i]['cities']) != 0:
-            for city in provinces_idx[i]['cities']:
-                tmp = []
-                tmp = [province, city['name'], cur_day, city['confirmed'], city['dead'], city['cured'], city['suspected']]
-                my_sheet.append(tmp)
-        else:
+    for i in range(len(China)):
+        province = China[i]['province']
+        for city in China[i]['cities']:
             tmp = []
-            tmp = [province, '', cur_day, provinces_idx[i]['confirmed'], provinces_idx[i]['dead'], provinces_idx[i]['cured'], provinces_idx[i]['suspected']]
+            tmp = [province, city[0], cur_day, city[1], city[2], city[3], city[4]]
             my_sheet.append(tmp)
 
 def main():
