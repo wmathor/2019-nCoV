@@ -19,10 +19,13 @@ The content of the crawling includes the number of confirmed cases, the number o
 
 If you don't see your province in an infected province, it may be because no cases have been found, but that doesn't mean you can let your guard down
 
-It may be faster for domestic users to [download](https://www.qsc.zju.edu.cn/box/-99324799) EXE files through this link
+It may be faster for domestic users to [download](https://www.qsc.zju.edu.cn/box/-59498619) EXE files through this link
 
 ----
-### :art:2020-02-03 New Program
+### :art:2020-02-18 V2.7 update
+- The data interface was replaced
+- The code has been refactored and now looks cleaner
+### 2020-02-03 New Program
 The function of 2019-ncov-timer. py program is to crawl the data at 0:00 am every day, and save it in the current sheet with the date of the day as the sheet name. The program was written to make it easier for researchers to analyze data
 
 Please read the following notes carefully
