@@ -17,11 +17,21 @@ headers = {
         'Referer':'https://lab.isaaclin.cn/nCoV/',
         'Accept-Language':'zh-CN,zh;q=0.8',
         'Upgrade-Insecure-Requests':'1'
-
     }
 
 def query(province):
     table = PrettyTable(['地区', '确诊', '死亡', '治愈'])
+    if province == "新疆":
+        province += "维吾尔自治区"
+    elif province == "西藏" or province == "内蒙古":
+        province += "自治区"
+    elif province == "广西":
+        province += "壮族自治区"
+    elif province == "宁夏":
+        province += "回族自治区"
+    elif province != "香港" and province != "澳门" and province != "台湾":
+        province += "省"
+    
     url = "https://lab.isaaclin.cn/nCoV/api/area?latest=1&province=" + province
     json_str = json.loads(requests.get(url, headers=headers).text)
     if json_str['success']:
@@ -127,8 +137,6 @@ def main():
         print(table)
         print()
         
-        
-
 
         print("==================================最新消息==================================")
         print()
@@ -150,7 +158,7 @@ def main():
         
 
         print()
-        key = input("请输入您想查询详细信息的省份，例如 湖北省 或 香港\n")
+        key = input("请输入您想查询详细信息的省份，例如 湖北\n")
         print()
         query(key)
             
