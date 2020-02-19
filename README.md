@@ -21,6 +21,8 @@ If you don't see your province in an infected province, it may be because no cas
 
 It may be faster for domestic users to [download](https://www.qsc.zju.edu.cn/box/-49419890) EXE files through this link
 
+Remember, don't use it too often, because the interface has a anti-crawl mechanism, which may cause your IP to be blacklisted. If you are blacklisted, you can't get the information. Note: frequent use refers to using the program more than twice in one second
+
 ----
 ### :art:2020-02-18 V2.7 update
 - The data interface was replaced
