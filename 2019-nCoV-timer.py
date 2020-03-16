@@ -28,18 +28,19 @@ def getData():
             break
     
     for data in json_str['results']:
-        if data['countryName'] == '中国': 
-            province_dict = {}
-            province_dict["province"] = data['provinceShortName']
-            province_dict["cities"] = []
-            if len(data['cities']) == 0:
-                province_dict['cities'].append(get_city_data('', data["confirmedCount"], data['deadCount'], data['curedCount'], data['suspectedCount']))            
-            else:
-                for city in data['cities']:        
-                    if city['cityName'] != '待明确地区':
-                        province_dict['cities'].append(get_city_data(city["cityName"], city["confirmedCount"], city['deadCount'], city['curedCount'], city['suspectedCount']))
+        if data['countryName'] == '中国':
+            if data['provinceShortName'] != '中国':
+                province_dict = {}
+                province_dict["province"] = data['provinceShortName']
+                province_dict["cities"] = []
+                if data['cities'] == None:
+                    province_dict['cities'].append(get_city_data('', data["confirmedCount"], data['deadCount'], data['curedCount'], data['suspectedCount']))            
+                else:
+                    for city in data['cities']:        
+                        if city['cityName'] != '待明确地区':
+                            province_dict['cities'].append(get_city_data(city["cityName"], city["confirmedCount"], city['deadCount'], city['curedCount'], city['suspectedCount']))
             
-            China.append(province_dict)
+                China.append(province_dict)
 
 def get_city_data(name, confirmedCount, deadCount, curedCount, suspectedCount):
     tmp = []
