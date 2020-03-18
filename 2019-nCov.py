@@ -128,7 +128,7 @@ def main():
                 sleep(1)
 
         for data in json_str['results']:
-            if data['countryName'] != '中国' and data['countryName'] != "“钻石公主”号邮轮" and data['countryName'] != "邮轮" and data['countryName'] != "「钻石公主」号邮轮":
+            if data['countryName'] != '中国':
                 confirmed = data['confirmedCount'] if data['confirmedCount'] != 0 else '-'
                 dead = data['deadCount'] if data['deadCount'] != 0 else '-'
                 cured = data['curedCount'] if data['curedCount'] != 0 else '-'
