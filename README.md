@@ -19,7 +19,7 @@ The content of the crawling includes the number of confirmed cases, the number o
 
 If you don't see your province in an infected province, it may be because no cases have been found, but that doesn't mean you can let your guard down
 
-It may be faster for domestic users to [download](https://www.qsc.zju.edu.cn/box/-49419890) EXE files through this link
+It may be faster for domestic users to [download](https://www.qsc.zju.edu.cn/box/-52532538) EXE files through this link
 
 Remember, don't use it too often, because the interface has a anti-crawl mechanism, which may cause your IP to be blacklisted. If you are blacklisted, you can't get the information. Note: frequent use refers to using the program more than twice in one second
 
