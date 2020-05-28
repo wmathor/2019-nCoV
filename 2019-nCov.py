@@ -47,14 +47,7 @@ def query(province):
             print("暂无相关信息")
     else:
         print("暂无相关信息")
-        return
-
-def is_json(json_str):
-    try:
-        json.loads(json_str)
-    except ValueError:
-        return False
-    return True      
+        return    
 
 def main():
     try:
@@ -108,7 +101,7 @@ def main():
         
         print(table)
 
-        
+        sleep(1)
         
         print()
         print("==================================国外情况==================================")
@@ -127,6 +120,7 @@ def main():
             else:
                 sleep(1)
 
+        sleep(1)
         for data in json_str['results']:
             if data['countryName'] != '中国':
                 confirmed = data['confirmedCount'] if data['confirmedCount'] != 0 else '-'
