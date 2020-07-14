@@ -10,6 +10,7 @@
     <img src = "https://img.shields.io/badge/Blog-wmathor-orange.svg">
   </a>
 </p>
+
 **Important note: Due to the cessation of service by the data interface, the maintenance of this project has officially ceased on July 14th. May all of you be well in the future**
 
 This repo holds the code for crawling the **latest news** on the pneumonia virus from the Internet
