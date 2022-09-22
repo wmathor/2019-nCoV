@@ -66,7 +66,7 @@ Part of the data in Excel are as follows:
 
 ### :rocket:ABOUT
 
-This project was written by me after staying up late for 2 hours in the evening. I just hope to call on all of you to give full play to your strengths, use what you have learned and do something within your capacity for the prevention and control of the epidemic. You can say that my project is rubbish, but please don't say that I am trying to make a show. No Chinese would make a show of this kind of thing
+This project was written by me after staying up late for 2 hours in the evening. I just hope to call on all of you to give full play to your strengths, use what you have learned and do something within your capacity for the prevention and control of the epidemic.
 
 ### :tada:TODO
 
